@@ -53,6 +53,8 @@ public:
     json_spirit::Value execute(const std::string &method, const json_spirit::Array &params) const;
 };
 
+extern json_spirit::Value importaddress(const json_spirit::Array& params, bool fHelp);
+
 extern const CRPCTable tableRPC;
 extern CReserveKey* pMiningKey;
 

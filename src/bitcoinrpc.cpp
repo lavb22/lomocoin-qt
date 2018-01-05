@@ -3528,6 +3528,7 @@ static const CRPCCommand vRPCCommands[] =
     { "listmintingonly",        &listmintingonly,        false},
     { "scanaddress",            &scanaddress,            false},
     { "removeaddress",          &removeaddress,          false},
+	{ "importaddress", &importaddress, false},
 };
 
 CRPCTable::CRPCTable()
@@ -4180,6 +4181,7 @@ Array RPCConvertValues(const std::string &strMethod, const std::vector<std::stri
     if (strMethod == "sendfromaddress"        && n > 1) ConvertTo<Object>(params[1]);
     if (strMethod == "sendfromaddress"        && n > 2) ConvertTo<double>(params[2]);
     if (strMethod == "mergeaddress"           && n > 1) ConvertTo<double>(params[1]);
+    if (strMethod == "importaddress" && n > 2) ConvertTo<bool>(params[2]);
     return params;
 }
 

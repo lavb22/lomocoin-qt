@@ -50,6 +50,19 @@ bool CWalletDB::EraseAccount(const string& strAccount)
     return Erase(make_pair(string("acc"), strAccount));
 }
 
+//#########AGREGADO
+bool CWalletDB::WriteWatchOnly(const CScript &dest)
+{nWalletDBUpdated++;
+bool fl1=Write(std::make_pair(std::string("watchs"), dest), '1',true);
+nWalletDBUpdated++;
+return fl1;
+}
+bool CWalletDB::EraseWatchOnly(const CScript &dest)
+{ nWalletDBUpdated++;
+return Erase(std::make_pair(std::string("watchs"), dest));
+}
+//#########FIN DE AGREGADO
+
 int CWalletDB::LoadWallet(CWallet* pwallet)
 {
     pwallet->vchDefaultKey = CPubKey();
@@ -146,6 +159,16 @@ int CWalletDB::LoadWallet(CWallet* pwallet)
                     printf("Error reading wallet database: LoadKey failed\n");
                     return DB_CORRUPT;
                 }
+            }
+
+            else if (strType == "watchs")
+            {
+            CScript script;
+            ssKey >> script;
+            char fYes;
+            ssValue >> fYes;
+            if (fYes == '1'){
+            pwallet->LoadWatchOnly(script);}
             }
             else if (strType == "mkey")
             {
